@@ -2,7 +2,7 @@
 //
 // Базовый контроллер сайта.
 //
-include_once('C_Controller.php');
+//include_once('C_Controller.php');
 abstract class C_Base extends C_Controller
 {
 	protected $title;		// заголовок страницы

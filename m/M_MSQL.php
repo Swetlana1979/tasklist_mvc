@@ -22,8 +22,7 @@ class M_MSQL
 	
 	//
 	// Выборка строк
-	// $query    	- полный текст SQL запроса
-	// результат	- массив выбранных объектов
+	
 	//
 	public function Select($query,$name){
 		$con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -34,7 +33,8 @@ class M_MSQL
 		mysqli_stmt_close($stmt);
 		if (!$result)
 		    die();
-		$res=array();
+		return $result;
+		/*$res=array();
 		if($result){
 			foreach($result as $key=>$value){
 				$status="готово";
@@ -44,14 +44,13 @@ class M_MSQL
 				$res[]=array($value['id'],$value['description'],$value['created_at'],$status);
 			}
 			return $res;			
-		}
+		}*/
 	}
 	
 	//
 	// Вставка строки в task
 	
-	// $object 		- ассоциативный массив с парами вида "имя столбца - значение"
-	// результат	- идентификатор новой строки
+	
 	//
 	public function Insert_task($sql, $user_id, $description, $created_at){			
 			
@@ -66,9 +65,7 @@ class M_MSQL
 	//
 	// Изменение строк
 	
-	// $object 		- ассоциативный массив с парами вида "имя столбца - значение"
-	// $where		- условие (часть SQL запроса)
-	// результат	- число измененных строк
+	
 	//	
 	public function Ready_all($sql, $user_id)
 	{
@@ -81,10 +78,7 @@ class M_MSQL
 	}
 	
 	//
-	// Удаление строк
-	// $table 		- имя таблицы
-	// $where		- условие (часть SQL запроса)	
-	// результат	- число удаленных строк
+	//
 	//		
 	public function Delete_all($sql,$user_id)
 	{
@@ -94,6 +88,7 @@ class M_MSQL
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}
+	
 	public function Ready_task($sql,$num,$id_task,$user_id){
 		$con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 		$stmt = mysqli_prepare($con,$sql);
@@ -101,5 +96,13 @@ class M_MSQL
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 		
+	}
+	
+	public function Delete_task($user_id, $id_task){
+		$con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+		$stmt = mysqli_prepare($con,"DELETE FROM tasks WHERE user_id=? AND id=?");
+		mysqli_stmt_bind_param($stmt, "ii", $user_id, $id_task);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
 	}
 }

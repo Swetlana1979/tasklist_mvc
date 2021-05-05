@@ -32,8 +32,18 @@ class M_Task
 	    $query = "SELECT users.login, tasks.id, tasks.description, tasks.created_at,tasks.status FROM `users`,`tasks` 
 	WHERE tasks.user_id=users.id AND users.login= ?"; 
 	$result=$this->msql->Select($query,$name);
-		
-		return $result;
+		$res=array();
+		if($result){
+			foreach($result as $key=>$value){
+				$status="готово";
+				if($value['status']==0){
+					$status="не готово";
+				}
+				$res[]=array($value['id'],$value['description'],$value['created_at'],$status);
+			}
+			return $res;			
+		}
+		return $res;
 	}
    //
    // Добавить новое задание
@@ -48,7 +58,6 @@ class M_Task
 	 // Изменить статус всех записей
 	 public function ready_all($user_id){
 	    $sql="UPDATE tasks SET status = 1 WHERE user_id=?";
-		
 		$this->msql->Ready_all($sql, $user_id);
 		return true;
     } 
@@ -69,7 +78,13 @@ class M_Task
 	   $this->msql->Ready_task($sql,$num,$id_task,$user_id);
 	   return true;
    }
-
+   
+   public function delete_task($id_task,$user_id){
+		$id_task=htmlspecialchars($_POST["num"]);
+		$sql="DELETE FROM tasks WHERE user_id=? AND id=?";
+		$this->msql->Delete_task($sql,$user_id,$id_task);
+		return true;
+	}
 
 //
 // Обработка данных

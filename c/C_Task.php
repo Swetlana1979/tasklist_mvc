@@ -73,6 +73,14 @@ class C_Task extends C_Base
 		header("Location:index.php?act=index");
 	}
 	
+	public function action_delete(){
+		$id_task=htmlspecialchars($_POST["num"]);
+		$user_id=$this->user_id;
+		$mTask = M_Task::Instance();
+		$mTask->delete_task($id_task,$user_id);
+		header("Location:index.php?act=index");
+	}
+	
 	 //
     // Опеделить нужную функцию
     //
@@ -82,8 +90,12 @@ class C_Task extends C_Base
 			$this->action_ready_all();
 		} else if($submit=='REMOVE ALL'){
 			$this->action_delete_all();
+		} else if(($submit=='READY')||($submit=='NO READY')){
+			$this->action_ready();
+		} else if($submit=='DELETE'){
+			$this->action_delete();
 		} else{
-			echo'Произошла ошибка';
+			echo "Произошла ошибка";
 		}
 	}
 }
