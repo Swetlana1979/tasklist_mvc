@@ -1,0 +1,133 @@
+body 
+{
+   font-family: Georgia;
+   font-size: 14px;
+   color: #000;
+}
+h1,h4,h6
+{
+  color: #ffa500;
+}
+label
+{
+   color: #ffa500;
+}
+a
+{
+   color: #ffa500;
+   text-decoration: none;
+   font-family: Georgia;
+}
+
+a:hover 
+{
+   text-decoration: underline;
+   font-family: Georgia;
+   color:red;
+}
+select
+{
+   color: #ffa500;
+}
+input[type="text"]
+{
+   width: 300px;
+   color: #ffa500;
+}
+.blok
+{
+    display:inline-block;
+    background-color:#ffffff;
+    color:#ffa500; 
+    font-family: Georgia;
+    width:250px;
+    text-align:center;
+}
+.num
+{
+  display:inline-block;
+  width:30px;
+  background-color:#ffffff;
+  color:#ffa500;
+  border-radius:10px;
+  text-align:center;
+}
+a#num
+{
+   color:#ffffff;
+}
+#datepicker
+{
+   width: 300px;
+}
+.n
+{
+   display:inline-block;
+   width:230;
+}
+.enter
+{
+   display:inline-block;
+}
+.add{
+   position:relative;
+   left:90%;
+   top:-150px;
+   text-decoration:none;
+}
+.button {
+   width:130;
+   border-top: 1px solid #f7a297;
+   background: #d2d665;
+   background: -webkit-gradient(linear, left top, left bottom, from(#f07c16), to(#d2d665));
+   background: -webkit-linear-gradient(top, #f07c16, #d2d665);
+   background: -moz-linear-gradient(top, #f07c16, #d2d665);
+   background: -ms-linear-gradient(top, #f07c16, #d2d665);
+   background: -o-linear-gradient(top, #f07c16, #d2d665);
+   padding: 9px 18px;
+   -webkit-border-radius: 17px;
+   -moz-border-radius: 17px;
+   border-radius: 17px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: white;
+   font-size: 13px;
+   font-family: Georgia, serif;
+   text-decoration: none;
+   vertical-align: middle;
+  }
+.button:hover 
+{
+   border-top-color: #f07c16;
+   background: orange;
+   background: -webkit-gradient(linear, left top, left bottom, from(orange), to(#d2d665));
+   background: -webkit-linear-gradient(top, #d2d665,#f07c16);
+   background: -moz-linear-gradient(top, #d2d665,#f07c16);
+   background: -ms-linear-gradient(top, #d2d665,#f07c16);
+   background: -o-linear-gradient(top, #d2d665,#f07c16);
+   color: white;
+   text-decoration:none;
+ }
+.button:active 
+{
+   border-top-color: #f7300d;
+   background: #f7300d;
+}
+
+.edit:before   
+{ 
+   content: "\270E"; 
+   color:red;
+}
+
+.delete:before 
+{ 
+   content: "\2718";
+   color:red;
+}
+#login,#password,#pass{
+   width:300px;
+   color:#ffa500;;
+}
