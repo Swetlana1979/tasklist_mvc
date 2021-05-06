@@ -16,16 +16,41 @@ class M_MSQL
 	
 	private function __construct()
 	{
-		include_once('startup.php');
-	    
+		//include_once('./c/startup.php');
+			    
 	}
 	
+	public function Con(){
+		return $con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+	}
+	
+	public function Login($sql,$login){
+		$con=$this->Con();
+		$stmt = mysqli_prepare($con,$sql); 
+		if(!$stmt){
+			echo 'не удалось получить данные';		  
+		}
+		mysqli_stmt_bind_param($stmt, "s", $login);
+		mysqli_stmt_execute($stmt);
+		$numrows = mysqli_stmt_get_result($stmt);
+		$row = mysqli_fetch_array($numrows, MYSQLI_NUM);
+		mysqli_stmt_close($stmt);
+		return $row;
+	}
+	
+	public function Register($sql,$login, $password, $created_at){
+		$con=$this->Con();
+		$stmt = mysqli_prepare($con, $sql); 
+			mysqli_stmt_bind_param($stmt, "sss", $login, $password, $created_at);
+			mysqli_stmt_execute($stmt);
+			//header("Location:index.php?login = $login&password = $password");
+			mysqli_stmt_close($stmt);
+	}
 	//
 	// Выборка строк
-	
 	//
 	public function Select($query,$name){
-		$con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+		$con=$this->Con();
 		$stmt = mysqli_prepare($con,$query);
 		mysqli_stmt_bind_param($stmt, "s", $name);
 		mysqli_stmt_execute($stmt);
@@ -34,27 +59,14 @@ class M_MSQL
 		if (!$result)
 		    die();
 		return $result;
-		/*$res=array();
-		if($result){
-			foreach($result as $key=>$value){
-				$status="готово";
-				if($value['status']==0){
-					$status="не готово";
-				}
-				$res[]=array($value['id'],$value['description'],$value['created_at'],$status);
-			}
-			return $res;			
-		}*/
 	}
 	
 	//
 	// Вставка строки в task
-	
-	
 	//
 	public function Insert_task($sql, $user_id, $description, $created_at){			
 			
-		$con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+		$con=$this->Con();
 		$stmt = mysqli_prepare($con, $sql); 
         mysqli_stmt_bind_param($stmt, "iss", $user_id, $description, $created_at);
 		mysqli_stmt_execute($stmt);
@@ -64,16 +76,13 @@ class M_MSQL
 	
 	//
 	// Изменение строк
-	
-	
 	//	
 	public function Ready_all($sql, $user_id)
 	{
-			$con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-			$stmt = mysqli_prepare($con,$sql);
+		$con=$this->Con();
+		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "i", $user_id);
 		mysqli_stmt_execute($stmt);
-			
 		mysqli_stmt_close($stmt);
 	}
 	
@@ -82,7 +91,7 @@ class M_MSQL
 	//		
 	public function Delete_all($sql,$user_id)
 	{
-		$con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+		$con=$this->Con();
 		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "i", $user_id);
 		mysqli_stmt_execute($stmt);
@@ -90,7 +99,7 @@ class M_MSQL
 	}
 	
 	public function Ready_task($sql,$num,$id_task,$user_id){
-		$con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+		$con=$this->Con();
 		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "iii", $num,$user_id, $id_task);
 		mysqli_stmt_execute($stmt);
@@ -98,9 +107,9 @@ class M_MSQL
 		
 	}
 	
-	public function Delete_task($user_id, $id_task){
-		$con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-		$stmt = mysqli_prepare($con,"DELETE FROM tasks WHERE user_id=? AND id=?");
+	public function Delete_task($sql,$user_id, $id_task){
+		$con=$this->Con();
+		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "ii", $user_id, $id_task);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);

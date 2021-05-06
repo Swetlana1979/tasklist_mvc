@@ -2,7 +2,7 @@
 //
 // Базовый контроллер сайта.
 //
-//include_once('C_Controller.php');
+//
 abstract class C_Base extends C_Controller
 {
 	protected $title;		// заголовок страницы
@@ -16,9 +16,8 @@ abstract class C_Base extends C_Controller
 	protected function before()	{
 		$this->title = 'Название сайта';
 		$this->content = '';
-		//include_once('./m/startup.php');
-	    //startup();
-		header('Content-type: text/html; charset=utf-8');
+		include_once('./c/startup.php');
+	    header('Content-type: text/html; charset=utf-8');
 	}
 	//
 	// Генерация базового шаблонаы

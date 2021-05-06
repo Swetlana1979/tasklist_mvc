@@ -1,6 +1,6 @@
 <div class = "container">
 	<h2>Добро пожаловать, <span><?php echo $_SESSION['session_login'];?>! </span></h2>
-	<p><a href = "logout.php">Выйти</a> из системы</p>
+	<p><a href = "index.php?act=logout">Выйти</a> из системы</p>
 	<h1>Task list</h2>
 	<div id = 'add'>
 		<form id = 'add_description' name = 'add_description' action = "index.php?act=add" method = "post">
