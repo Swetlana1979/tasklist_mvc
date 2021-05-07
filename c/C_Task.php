@@ -13,19 +13,9 @@ class C_Task extends C_Base
 	function __construct()
 	{		
 		parent::__construct();
-		$this->mTask = M_Task::Instance();
+		//$this->mTask = M_Task::Instance();
 	}
 	
-	
-	public function name(){
-		$name = $_SESSION['session_login'];
-		return $name;
-	}
-	
-	public function user_id(){
-		$user_id = $_SESSION['session_id'];
-		return $id;
-	}
 	
 	public function action_logout() {
 		unset($_SESSION['session_login']);
@@ -42,21 +32,23 @@ class C_Task extends C_Base
 			$password = htmlspecialchars($_POST['password']);
 			$mTask = M_Task::Instance();
 			$row=$mTask->login($login);
+			//print_r($row);
 			if(!empty($row)){
 				$dblogin = $row[1];//$value['login'];
 				$dbpassword = $row[2];//$value['password'];
-				$dbid = $row[0];//$value['id'];
+				$user_id = $row[0];//$value['id'];
+				//echo $row[0];
 				if($login == $dblogin && $password == $dbpassword){
 					$_SESSION['session_login'] = $login;
 					$_SESSION['session_id'] = $user_id;
-					header("Location:index.php?act=index");
+					header("Location:index.php?");
 				} else {
 					echo  "Invalid username or password!";
 				}				
 			} else {
 				$created_at = date("Y-m-d H:i:s");
 				$mTask->Register($login, $password,$created_at);
-				header("Location:index.php?act=index");
+				header("Location:register.php?login=$login&&password=$password");
 			} 
 		}
 		
@@ -67,18 +59,22 @@ class C_Task extends C_Base
 		if(empty($_SESSION['session_login'])){
 			header("Location:register.php");
 		}
+		//echo $_GET['row'];
 		$this->title .= '::Task list';
 		$mTask = M_Task::Instance();
-		$name = $this->name();
+		$name = $_SESSION['session_login'];
+		//echo $name;
 		$task = $mTask->task_all($name);
 		//буферизация данных, отправка в шаблон
 		$this->content = $this->Template('./v/index.php', array('task' => $task));		
 	}
 	
 	public function action_add(){
+		
 		if(!empty($_POST['description'])){
 			$description=htmlspecialchars($_POST["description"]);
-			$user_id=$this->user_id;
+			$user_id=$_SESSION['session_id'];
+			
 		}
 		$mTask = M_Task::Instance();
 		$mTask->add_desc($user_id, $description);
@@ -87,7 +83,7 @@ class C_Task extends C_Base
 	}
 
 	public function action_ready_all(){
-		$user_id=$this->user_id();
+		$user_id=$_SESSION['session_id'];
 		$mTask = M_Task::Instance();
 		$mTask->ready_all($user_id);
 		header("Location:index.php?act=index");
@@ -95,7 +91,7 @@ class C_Task extends C_Base
 	
     
 	public function action_delete_all(){
-		$user_id = $this->user_id();
+		$user_id = $_SESSION['session_id'];
 		$mTask = M_Task::Instance();
 		$mTask->delete_all($user_id);
 		header("Location:index.php?act=index");
@@ -104,7 +100,7 @@ class C_Task extends C_Base
 	public function action_ready(){
 		$id_task=htmlspecialchars($_POST["num"]);
 		$stat=htmlspecialchars($_POST["stat"]);
-		$user_id=$this->user_id();
+		$user_id=$_SESSION['session_id'];
 		if($stat =='не готово'){
 			$num=1;
 		} else{
@@ -117,7 +113,7 @@ class C_Task extends C_Base
 	
 	public function action_delete(){
 		$id_task=htmlspecialchars($_POST["num"]);
-		$user_id=$this->user_id();
+		$user_id=$_SESSION['session_id'];
 		$mTask = M_Task::Instance();
 		$mTask->delete_task($user_id, $id_task);
 		header("Location:index.php?act=index");

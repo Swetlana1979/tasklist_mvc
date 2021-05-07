@@ -13,8 +13,7 @@ abstract class C_Controller
 		$this->before();
 		$this->$action();
 		$this->render();
-		$this->name();
-		$this->id();
+		
 	}
 	//
 	// Запрос произведен методом GET?
@@ -41,7 +40,8 @@ abstract class C_Controller
 		ob_start();
 		include "$fileName";
 		return ob_get_clean();	
-	}	
+	}
+	
 	// Если вызвали метод, которого нет - завершаем работу
 	public function __call($name, $params){
         die('Не пишите фигню в url-адресе!!!');

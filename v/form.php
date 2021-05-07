@@ -6,7 +6,7 @@
 <div class="container mregister">
 	<div id="login">
 	<h1>Авторизация</h1>
-	<form action="index.php?act=login" id="registerform" method="post"name="registerform">
+	<form action="index.php?act=login" id="registerform" method="post" name="registerform">
 		<p><label for="user_pass">Имя пользователя<br>
 		<input class="input" id="login" name="login"size="20" type="text" value="<? echo $_GET['login']?>"></label></p>
 		<p><label for="user_pass">Пароль<br>
