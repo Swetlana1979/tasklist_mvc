@@ -41,10 +41,9 @@ class M_MSQL
 	public function Register($sql,$login, $password, $created_at){
 		$con=$this->Con();
 		$stmt = mysqli_prepare($con, $sql); 
-			mysqli_stmt_bind_param($stmt, "sss", $login, $password, $created_at);
-			mysqli_stmt_execute($stmt);
-			//header("Location:index.php?login = $login&password = $password");
-			mysqli_stmt_close($stmt);
+		mysqli_stmt_bind_param($stmt, "sss", $login, $password, $created_at);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
 	}
 	//
 	// Выборка строк

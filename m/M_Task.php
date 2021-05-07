@@ -25,7 +25,6 @@ class M_Task
  	public function login($login){
 		$sql="SELECT * FROM users WHERE login = ?";
 		$row=$this->msql->Login($sql,$login);
-		//print_r($row);
 		return $row;
 	}
 	

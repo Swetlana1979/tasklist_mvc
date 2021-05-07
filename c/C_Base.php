@@ -17,7 +17,7 @@ abstract class C_Base extends C_Controller
 		$this->title = 'Название сайта';
 		$this->content = '';
 		include_once('./c/startup.php');
-	    header('Content-type: text/html; charset=utf-8');
+		header('Content-type: text/html; charset=utf-8');
 	}
 	//
 	// Генерация базового шаблонаы
@@ -27,7 +27,6 @@ abstract class C_Base extends C_Controller
 		$page = $this->Template('v/sabl.php', $vars);				
 		echo $page;
 	}
-	public function start(){
-		session_start();
-	}
+	
+	
 }

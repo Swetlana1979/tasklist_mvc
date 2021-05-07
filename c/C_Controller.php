@@ -13,7 +13,8 @@ abstract class C_Controller
 		$this->before();
 		$this->$action();
 		$this->render();
-		
+		$this->name();
+		$this->id();
 	}
 	//
 	// Запрос произведен методом GET?
