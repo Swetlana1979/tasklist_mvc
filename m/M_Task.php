@@ -7,11 +7,9 @@ class M_Task
 	//
 	// Получение единственного экземпляра (синглтон)
 	//
-	public static function Instance()
-	{
+	public static function Instance(){
 		if (self::$instance == null)
 			self::$instance = new M_Task();
-		
 		return self::$instance;
 	}
 	//
@@ -22,26 +20,43 @@ class M_Task
 		$this->msql = M_MSQL::Instance();
 	}
 	
+	//
+	// Авторизация
+	// $login - имя пользователя
+	// $row - данные зарегистрированного пользователя
+	//
  	public function login($login){
 		$sql="SELECT * FROM users WHERE login = ?";
-		$row=$this->msql->Login($sql,$login);
+		$row=$this->msql->login($sql,$login);
 		return $row;
 	}
 	
-	public function Register($login, $password,$created_at){
+	//
+	// Авторизация
+	// $login - имя пользователя
+	// $password - пароль
+	// $created_at - время создания
+	// $row - данные зарегистрированного пользователя
+	//
+	public function register($login, $password,$created_at){
 		$sql="INSERT INTO users(login, password,created_at)VALUES(?,?,?)"; 
-		$row=$this->msql->Register($sql,$login, $password,$created_at);
+		$row=$this->msql->register($sql,$login, $password,$created_at);
 		
 	}
-	
-	public function Reverse_date($date){
+	//
+	// Приведение даты из БД к нужному формату
+	//
+	public function reverse_date($date){
 		$mass=explode('-',$date);
 		$mass=array_reverse($mass);
 		$date=implode('.',$mass);
 		return $date;
 	}
-	
-	public function Output($arr){
+	// 
+	// Вывод задач пользователя
+	// $arr - массив задач
+	//
+	public function output($arr){
 		$array=array();
 		for($i=0; $i<count($arr); $i++){
 			$status=$arr[$i]['3'];
@@ -49,7 +64,7 @@ class M_Task
 			$created_at=$arr[$i]['2'];
 			$dateTime=explode(" ", $created_at);
 			$time=$dateTime[1];
-			$date=$this->Reverse_date($dateTime[0]);
+			$date=$this->reverse_date($dateTime[0]);
 			$created_at=$date." ".$time;
 				$str="<tr><form class=blok name='task_form".$i."' action='index.php?act=delete_ready' method='post'><td>".
 				$arr[$i]['0']."</td><td>".$arr[$i]['1']."</td><td>".$created_at."</td><td>".$arr[$i]['3'].
@@ -63,13 +78,17 @@ class M_Task
 			}
 		return $array;
 	}
+	
   //
   // Список всех задач пользователя
+  // $login - логин пользователя
+  // $task - массив задач пользователя
   //
-	public function task_all($name){
+	public function task_all($login){
+		
 		$query = "SELECT users.login, tasks.id, tasks.description, tasks.created_at,tasks.status FROM `users`,`tasks` 
 		WHERE tasks.user_id=users.id AND users.login= ?"; 
-		$result=$this->msql->Select($query,$name);
+		$result=$this->msql->select($query,$login);
 		$res=array();
 		if($result){
 			foreach($result as $key=>$value){
@@ -81,47 +100,58 @@ class M_Task
 			}
 					
 		}
-		$task=$this->Output($res);
+		$task=$this->output($res);
 		return $task;
-		
 	}
+	
    //
    // Добавить новое задание
+   // $user_id - id пользователя
+   // $description - описание задачи
    //
     public function add_desc($user_id,$description){
 	    $created_at=date("Y-m-d H:i:s");
 		$sql = "INSERT INTO tasks(user_id, description, created_at, status)VALUES(?,?,?, 0)"; 
-		$this->msql->Insert_task($sql, $user_id,$description, $created_at);	
+		$this->msql->insert_task($sql, $user_id,$description, $created_at);	
 	 }
+	 
 	 //
-	 // Изменить статус всех записей
+	 // Изменить статус всех задач
+	 // $user_id -id пользователя
+	 //
 	 public function ready_all($user_id){
 	    $sql="UPDATE tasks SET status = 1 WHERE user_id=?";
-		$this->msql->Ready_all($sql, $user_id);
+		$this->msql->ready_all($sql, $user_id);
 		return true;
     } 
 	
 	//
-	// Удалить все записи
+	// Удалить все задачи
+	// $user_id -id пользователя
 	//
 	public function delete_all($user_id){
 	    $sql="DELETE FROM tasks WHERE user_id=?";
-		$this->msql->Delete_all($sql, $user_id);
+		$this->msql->delete_all($sql, $user_id);
 		return true;
     } 
 	//
 	// Изменить статус задачи
+	// $num - статус задачи
+	// $id_task - номер задачи
+	// $user_id - номер пользователя
 	//
 	public function ready_task($num,$id_task,$user_id){
 	   $sql="UPDATE tasks SET status = ? WHERE user_id=? AND id=?";
-	   $this->msql->Ready_task($sql,$num,$id_task,$user_id);
+	   $this->msql->ready_task($sql,$num,$id_task,$user_id);
 	   return true;
 	}
-   
+	
+   //
+   // Удалить задачу
+   //
    public function delete_task($user_id, $id_task){
-		//$id_task=htmlspecialchars($_POST["num"]);
 		$sql="DELETE FROM tasks WHERE user_id=? AND id=?";
-		$this->msql->Delete_task($sql, $user_id, $id_task);
+		$this->msql->delete_task($sql, $user_id, $id_task);
 		return true;
 	}
 	

@@ -75,7 +75,7 @@ a#num
    top:-150px;
    text-decoration:none;
 }
-.button {
+.sub {
    width:130;
    border-top: 1px solid #f7a297;
    background: #d2d665;
@@ -98,7 +98,7 @@ a#num
    text-decoration: none;
    vertical-align: middle;
   }
-.button:hover 
+.sub:hover 
 {
    border-top-color: #f07c16;
    background: orange;
@@ -110,7 +110,7 @@ a#num
    color: white;
    text-decoration:none;
  }
-.button:active 
+.sub:active 
 {
    border-top-color: #f7300d;
    background: #f7300d;

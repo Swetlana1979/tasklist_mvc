@@ -16,8 +16,16 @@ abstract class C_Base extends C_Controller
 	protected function before()	{
 		$this->title = 'Название сайта';
 		$this->content = '';
-		include_once('./c/startup.php');
-		header('Content-type: text/html; charset=utf-8');
+		
+		//include_once('C_Connect.php');
+		//header('Content-type: text/html; charset=utf-8');
+	}
+	public function connect(){
+		session_start();
+		define('DB_HOST', 'localhost');
+		define('DB_USER', 'root');
+		define('DB_PASS', '');
+		define('DB_NAME', 'tasklist');
 	}
 	//
 	// Генерация базового шаблонаы

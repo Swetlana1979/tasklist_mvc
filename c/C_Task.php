@@ -25,6 +25,9 @@ class C_Task extends C_Base
 		
 	}
 	
+	//
+	// Авторизация
+	//
 	public function action_login() {
 		
 		if((!empty($_POST['login'])&&(!empty($_POST['password'])))){
@@ -32,12 +35,10 @@ class C_Task extends C_Base
 			$password = htmlspecialchars($_POST['password']);
 			$mTask = M_Task::Instance();
 			$row=$mTask->login($login);
-			//print_r($row);
 			if(!empty($row)){
-				$dblogin = $row[1];//$value['login'];
-				$dbpassword = $row[2];//$value['password'];
-				$user_id = $row[0];//$value['id'];
-				//echo $row[0];
+				$dblogin = $row[1];
+				$dbpassword = $row[2];
+				$user_id = $row[0];
 				if($login == $dblogin && $password == $dbpassword){
 					$_SESSION['session_login'] = $login;
 					$_SESSION['session_id'] = $user_id;
@@ -47,28 +48,31 @@ class C_Task extends C_Base
 				}				
 			} else {
 				$created_at = date("Y-m-d H:i:s");
-				$mTask->Register($login, $password,$created_at);
+				$mTask->register($login, $password,$created_at);
 				header("Location:register.php?login=$login&&password=$password");
 			} 
 		}
 		
 	}
 	
+	//
 	//Список пользователей
+	//
 	public function action_index() {
 		if(empty($_SESSION['session_login'])){
 			header("Location:register.php");
 		}
-		//echo $_GET['row'];
-		$this->title .= '::Task list';
+		//$this->title .= '::Task list';
 		$mTask = M_Task::Instance();
-		$name = $_SESSION['session_login'];
-		//echo $name;
-		$task = $mTask->task_all($name);
+		$login = $_SESSION['session_login'];
+		$task = $mTask->task_all($login);
 		//буферизация данных, отправка в шаблон
 		$this->content = $this->Template('./v/index.php', array('task' => $task));		
 	}
 	
+	//
+	// Добавить задачу
+	//
 	public function action_add(){
 		
 		if(!empty($_POST['description'])){
@@ -79,8 +83,10 @@ class C_Task extends C_Base
 		$mTask = M_Task::Instance();
 		$mTask->add_desc($user_id, $description);
 		header("Location:index.php?act=index");
-		//$this->content = $this->Template('./v/index.php', array('array'=>$array, 'error' => $error ));          
 	}
+	//
+	// Изменить статус всех задач
+	//
 
 	public function action_ready_all(){
 		$user_id=$_SESSION['session_id'];
@@ -89,7 +95,9 @@ class C_Task extends C_Base
 		header("Location:index.php?act=index");
 	}
 	
-    
+    //
+	// Удалить все задачи
+	//
 	public function action_delete_all(){
 		$user_id = $_SESSION['session_id'];
 		$mTask = M_Task::Instance();
@@ -97,6 +105,9 @@ class C_Task extends C_Base
 		header("Location:index.php?act=index");
 	}
 	
+	//
+	// Изменить статус задачи(готово/не готово)
+	//
 	public function action_ready(){
 		$id_task=htmlspecialchars($_POST["num"]);
 		$stat=htmlspecialchars($_POST["stat"]);
@@ -110,7 +121,9 @@ class C_Task extends C_Base
 		$mTask->ready_task($num,$id_task,$user_id);
 		header("Location:index.php?act=index");
 	}
-	
+	//
+	// Удалить задачу
+	//
 	public function action_delete(){
 		$id_task=htmlspecialchars($_POST["num"]);
 		$user_id=$_SESSION['session_id'];

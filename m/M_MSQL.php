@@ -6,26 +6,35 @@ class M_MSQL
 {
 	private static $instance;
 	
-	public static function Instance()
-	{
+	public static function Instance(){
 		if (self::$instance == null)
 			self::$instance = new M_MSQL();
-		
 		return self::$instance;
 	}
-	
-	private function __construct()
-	{
-		//include_once('./c/startup.php');
-			    
+	//
+	// Конструктор
+	//
+	private function __construct(){
+		
 	}
 	
-	public function Con(){
-		return $con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+	//
+	// Соединение с БД
+	//
+	public function con(){
+		$con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+		if (!$con) {
+			printf("Невозможно подключиться к базе данных. Код ошибки: %s\n", mysqli_connect_error());
+			exit;
+		}
+		return $con;
 	}
 	
-	public function Login($sql,$login){
-		$con=$this->Con();
+	//
+	// Авторизация пользователя
+	//
+	public function login($sql,$login){
+		$con=$this->con();
 		$stmt = mysqli_prepare($con,$sql); 
 		if(!$stmt){
 			echo 'не удалось получить данные';		  
@@ -38,20 +47,24 @@ class M_MSQL
 		return $row;
 	}
 	
-	public function Register($sql,$login, $password, $created_at){
-		$con=$this->Con();
+	//
+	// Регистрация пользователя
+	//
+	public function register($sql,$login, $password, $created_at){
+		$con=$this->con();
 		$stmt = mysqli_prepare($con, $sql); 
 		mysqli_stmt_bind_param($stmt, "sss", $login, $password, $created_at);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}
 	//
-	// Выборка строк
+	// Выборка задач пользователя
 	//
-	public function Select($query,$name){
-		$con=$this->Con();
+	public function select($query,$login){
+		
+		$con=$this->con();
 		$stmt = mysqli_prepare($con,$query);
-		mysqli_stmt_bind_param($stmt, "s", $name);
+		mysqli_stmt_bind_param($stmt, "s", $login);
 		mysqli_stmt_execute($stmt);
 		$result = mysqli_stmt_get_result($stmt);
 		mysqli_stmt_close($stmt);
@@ -61,11 +74,10 @@ class M_MSQL
 	}
 	
 	//
-	// Вставка строки в task
+	// Добавление задачи
 	//
-	public function Insert_task($sql, $user_id, $description, $created_at){			
-			
-		$con=$this->Con();
+	public function insert_task($sql, $user_id, $description, $created_at){			
+		$con=$this->con();
 		$stmt = mysqli_prepare($con, $sql); 
         mysqli_stmt_bind_param($stmt, "iss", $user_id, $description, $created_at);
 		mysqli_stmt_execute($stmt);
@@ -76,9 +88,8 @@ class M_MSQL
 	//
 	// Изменение строк
 	//	
-	public function Ready_all($sql, $user_id)
-	{
-		$con=$this->Con();
+	public function ready_all($sql, $user_id){
+		$con=$this->con();
 		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "i", $user_id);
 		mysqli_stmt_execute($stmt);
@@ -86,28 +97,33 @@ class M_MSQL
 	}
 	
 	//
-	//
+	// Удалить все задачи
 	//		
-	public function Delete_all($sql,$user_id)
-	{
-		$con=$this->Con();
+	public function delete_all($sql,$user_id){
+		$con=$this->con();
 		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "i", $user_id);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}
 	
-	public function Ready_task($sql,$num,$id_task,$user_id){
-		$con=$this->Con();
+	//
+	// Изменить статус задачи
+	//
+	public function ready_task($sql,$num,$id_task,$user_id){
+		$con=$this->con();
 		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "iii", $num,$user_id, $id_task);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 		
 	}
+	//
+	// Удалить задачу
+	//
 	
-	public function Delete_task($sql,$user_id, $id_task){
-		$con=$this->Con();
+	public function delete_task($sql,$user_id, $id_task){
+		$con=$this->con();
 		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "ii", $user_id, $id_task);
 		mysqli_stmt_execute($stmt);
