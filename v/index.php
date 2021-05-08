@@ -6,13 +6,10 @@
 	}
 	?>
    
-   
-	
-	<?if(!empty($task)){?>
+   	<?if(!empty($task)){?>
 	    
 		<div class='container'>
-		 <h1>Список задач</h1>
-		<table><tr><td>№</td><td>description</td><td>created_at</td><td>status</td></tr>
+		 <table><tr><td>№</td><td>description</td><td>created_at</td><td>status</td></tr>
 		<? foreach($task as $key=>$value){
 			echo $value;
 		}

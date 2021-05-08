@@ -4,7 +4,7 @@ body
    font-size: 14px;
    color: #000;
 }
-h1,h4,h6
+h1,h2,h4,h6
 {
   color: #ffa500;
 }
@@ -33,6 +33,10 @@ input[type="text"]
 {
    width: 300px;
    color: #ffa500;
+}
+.container{
+	margin: 0 auto;
+	/*text-align: center;*/
 }
 .blok
 {
@@ -75,7 +79,24 @@ a#num
    top:-150px;
    text-decoration:none;
 }
-.sub {
+.red{
+	 background-color:red;
+	 border-color:red;
+	 border-radius: 50%;
+}
+.green{
+	 background-color:green;
+	 border-color:green;
+	 border-radius: 50%;
+}
+.stat{
+	 height: 50px;
+	 width: 50px;
+	 border-radius: 50%;
+	 border:2px solid;
+	
+}
+.button {
    width:130;
    border-top: 1px solid #f7a297;
    background: #d2d665;
@@ -98,7 +119,28 @@ a#num
    text-decoration: none;
    vertical-align: middle;
   }
-.sub:hover 
+ .sub {
+   width:100;
+   border-top: 1px solid #f7a297;
+   background: #d2d665;
+   background: -webkit-gradient(linear, left top, left bottom, from(#f07c16), to(#d2d665));
+   background: -webkit-linear-gradient(top, #f07c16, #d2d665);
+   background: -moz-linear-gradient(top, #f07c16, #d2d665);
+   background: -ms-linear-gradient(top, #f07c16, #d2d665);
+   background: -o-linear-gradient(top, #f07c16, #d2d665);
+   padding: 7px 7px;
+   border-radius: 17px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: white;   
+   font-size: 13px;
+   font-family: Georgia, serif;
+   text-decoration: none;
+   vertical-align: middle;
+  }
+.button:hover 
 {
    border-top-color: #f07c16;
    background: orange;
@@ -110,7 +152,7 @@ a#num
    color: white;
    text-decoration:none;
  }
-.sub:active 
+.button:active 
 {
    border-top-color: #f7300d;
    background: #f7300d;

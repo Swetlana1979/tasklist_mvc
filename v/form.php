@@ -3,7 +3,7 @@
 		echo"Здравствуйте новый пользователь ".$_GET['login'].", авторизуйтесь";
 	} 
 ?>
-<div class="container mregister">
+<div class="mregister">
 	<div id="login">
 	<h1>Авторизация</h1>
 	<form action="index.php?act=login" id="registerform" method="post" name="registerform">

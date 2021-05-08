@@ -63,6 +63,7 @@ class C_Task extends C_Base
 		$mTask = M_Task::Instance();
 		$login = $_SESSION['session_login'];
 		$task = $mTask->task_all($login);
+		
 		//буферизация данных, отправка в шаблон
 		$this->content = $this->Template('./v/index.php', array('task' => $task));		
 	}
