@@ -42,14 +42,14 @@ class C_Task extends C_Base
 				if($login == $dblogin && $password == $dbpassword){
 					$_SESSION['session_login'] = $login;
 					$_SESSION['session_id'] = $user_id;
-					header("Location:index.php?");
+					header("Location:index.php");
 				} else {
 					echo  "Invalid username or password!";
 				}				
 			} else {
 				$created_at = date("Y-m-d H:i:s");
 				$mTask->register($login, $password,$created_at);
-				header("Location:register.php?login=$login&&password=$password");
+				header("Location:index.php?act=index&&login=$login&&password=$password");
 			} 
 		}
 		
@@ -59,10 +59,7 @@ class C_Task extends C_Base
 	//Список пользователей
 	//
 	public function action_index() {
-		if(empty($_SESSION['session_login'])){
-			header("Location:register.php");
-		}
-		//$this->title .= '::Task list';
+		
 		$mTask = M_Task::Instance();
 		$login = $_SESSION['session_login'];
 		$task = $mTask->task_all($login);
