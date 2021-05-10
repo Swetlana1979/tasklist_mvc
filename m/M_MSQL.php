@@ -34,7 +34,7 @@ class M_MSQL
 	// Авторизация пользователя
 	//
 	public function login($sql,$login){
-		$con=$this->con();
+		$con = $this->con();
 		$stmt = mysqli_prepare($con,$sql); 
 		if(!$stmt){
 			echo 'не удалось получить данные';		  
@@ -51,7 +51,7 @@ class M_MSQL
 	// Регистрация пользователя
 	//
 	public function register($sql,$login, $password, $created_at){
-		$con=$this->con();
+		$con =  $this->con();
 		$stmt = mysqli_prepare($con, $sql); 
 		mysqli_stmt_bind_param($stmt, "sss", $login, $password, $created_at);
 		mysqli_stmt_execute($stmt);
@@ -62,7 +62,7 @@ class M_MSQL
 	//
 	public function select($query,$login){
 		
-		$con=$this->con();
+		$con = $this->con();
 		$stmt = mysqli_prepare($con,$query);
 		mysqli_stmt_bind_param($stmt, "s", $login);
 		mysqli_stmt_execute($stmt);
@@ -77,7 +77,7 @@ class M_MSQL
 	// Добавление задачи
 	//
 	public function insert_task($sql, $user_id, $description, $created_at){			
-		$con=$this->con();
+		$con = $this->con();
 		$stmt = mysqli_prepare($con, $sql); 
         mysqli_stmt_bind_param($stmt, "iss", $user_id, $description, $created_at);
 		mysqli_stmt_execute($stmt);
@@ -89,7 +89,7 @@ class M_MSQL
 	// Изменение строк
 	//	
 	public function ready_all($sql, $user_id){
-		$con=$this->con();
+		$con = $this->con();
 		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "i", $user_id);
 		mysqli_stmt_execute($stmt);
@@ -100,7 +100,7 @@ class M_MSQL
 	// Удалить все задачи
 	//		
 	public function delete_all($sql,$user_id){
-		$con=$this->con();
+		$con = $this->con();
 		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "i", $user_id);
 		mysqli_stmt_execute($stmt);
@@ -111,7 +111,7 @@ class M_MSQL
 	// Изменить статус задачи
 	//
 	public function ready_task($sql,$num,$id_task,$user_id){
-		$con=$this->con();
+		$con = $this->con();
 		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "iii", $num,$user_id, $id_task);
 		mysqli_stmt_execute($stmt);
@@ -123,7 +123,7 @@ class M_MSQL
 	//
 	
 	public function delete_task($sql,$user_id, $id_task){
-		$con=$this->con();
+		$con = $this->con();
 		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "ii", $user_id, $id_task);
 		mysqli_stmt_execute($stmt);

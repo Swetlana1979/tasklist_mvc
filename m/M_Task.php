@@ -68,12 +68,12 @@ class M_Task
 			$date=$this->reverse_date($dateTime[0]);
 			$created_at=$date." ".$time;
 				$str="<tr><form class='' name='task_form".$i."' action='index.php?act=delete_ready' method='post'><td>".
-				$arr[$i]['0']."</td><td>".$arr[$i]['1']."</td><td>".$created_at."</td><td class='".$color."'><div class='".$color." stat'></div>
+				$arr[$i]['0']."</td><td>".$arr[$i]['1']."</td><td>".$created_at."</td><td class=''>".$status."</td><td><div class='".$color." stat'></div>
 				</td></tr><tr><td>
-				<input type='submit' name='sub' class='sub' value='".$read_stat."'></td><td>
-				<input type='hidden' id='stat' name='stat' size='10' width='10' value='".$status."'></td><td>
-				<input type='submit' name='sub' class='sub' value='DELETE'></td><td>
-				<input type='hidden' name='num' value='".$arr[$i]['0']."'></td>
+				<input type = 'submit' name ='sub' class ='sub' value ='".$read_stat."'></td><td>
+				<input type = 'hidden' id='stat' name ='stat' size = '10' width = '10' value='".$status."'></td><td>
+				<input type = 'submit' name ='sub' class ='sub' value = 'DELETE'></td><td>
+				<input type = 'hidden' name ='num' value = '".$arr[$i]['0']."'></td>
 				</form></tr>";
 				$array[]=$str;				
 			}
@@ -89,19 +89,19 @@ class M_Task
 		
 		$query = "SELECT users.login, tasks.id, tasks.description, tasks.created_at,tasks.status FROM `users`,`tasks` 
 		WHERE tasks.user_id=users.id AND users.login= ?"; 
-		$result=$this->msql->select($query,$login);
+		$result = $this->msql->select($query,$login);
 		$res=array();
 		if($result){
-			foreach($result as $key=>$value){
+			foreach($result as $key => $value){
 				$status="готово";
-				if($value['status']==0){
+				if($value['status'] == 0){
 					$status="не готово";
 				}
-				$res[]=array($value['id'],$value['description'],$value['created_at'],$status);
+				$res[] = array($value['id'],$value['description'],$value['created_at'],$status);
 			}
 					
 		}
-		$task=$this->output($res);
+		$task = $this->output($res);
 		return $task;
 	}
 	
@@ -111,7 +111,7 @@ class M_Task
    // $description - описание задачи
    //
     public function add_desc($user_id,$description){
-	    $created_at=date("Y-m-d H:i:s");
+	    $created_at = date("Y-m-d H:i:s");
 		$sql = "INSERT INTO tasks(user_id, description, created_at, status)VALUES(?,?,?, 0)"; 
 		$this->msql->insert_task($sql, $user_id,$description, $created_at);	
 	 }
@@ -121,7 +121,7 @@ class M_Task
 	 // $user_id -id пользователя
 	 //
 	 public function ready_all($user_id){
-	    $sql="UPDATE tasks SET status = 1 WHERE user_id=?";
+	    $sql = "UPDATE tasks SET status = 1 WHERE user_id=?";
 		$this->msql->ready_all($sql, $user_id);
 		return true;
     } 
@@ -131,7 +131,7 @@ class M_Task
 	// $user_id -id пользователя
 	//
 	public function delete_all($user_id){
-	    $sql="DELETE FROM tasks WHERE user_id=?";
+	    $sql = "DELETE FROM tasks WHERE user_id=?";
 		$this->msql->delete_all($sql, $user_id);
 		return true;
     } 
@@ -142,7 +142,7 @@ class M_Task
 	// $user_id - номер пользователя
 	//
 	public function ready_task($num,$id_task,$user_id){
-	   $sql="UPDATE tasks SET status = ? WHERE user_id=? AND id=?";
+	   $sql = "UPDATE tasks SET status = ? WHERE user_id=? AND id=?";
 	   $this->msql->ready_task($sql,$num,$id_task,$user_id);
 	   return true;
 	}
@@ -151,7 +151,7 @@ class M_Task
    // Удалить задачу
    //
    public function delete_task($user_id, $id_task){
-		$sql="DELETE FROM tasks WHERE user_id=? AND id=?";
+		$sql = "DELETE FROM tasks WHERE user_id=? AND id=?";
 		$this->msql->delete_task($sql, $user_id, $id_task);
 		return true;
 	}

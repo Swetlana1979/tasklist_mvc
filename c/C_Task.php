@@ -87,7 +87,7 @@ class C_Task extends C_Base
 	//
 
 	public function action_ready_all(){
-		$user_id=$_SESSION['session_id'];
+		$user_id = $_SESSION['session_id'];
 		$mTask = M_Task::Instance();
 		$mTask->ready_all($user_id);
 		header("Location:index.php?act=index");
@@ -107,13 +107,13 @@ class C_Task extends C_Base
 	// Изменить статус задачи(готово/не готово)
 	//
 	public function action_ready(){
-		$id_task=htmlspecialchars($_POST["num"]);
-		$stat=htmlspecialchars($_POST["stat"]);
-		$user_id=$_SESSION['session_id'];
+		$id_task = htmlspecialchars($_POST["num"]);
+		$stat = htmlspecialchars($_POST["stat"]);
+		$user_id = $_SESSION['session_id'];
 		if($stat =='не готово'){
-			$num=1;
+			$num = 1;
 		} else{
-			$num=0;
+			$num = 0;
 		} 
 		$mTask = M_Task::Instance();
 		$mTask->ready_task($num,$id_task,$user_id);
@@ -123,8 +123,8 @@ class C_Task extends C_Base
 	// Удалить задачу
 	//
 	public function action_delete(){
-		$id_task=htmlspecialchars($_POST["num"]);
-		$user_id=$_SESSION['session_id'];
+		$id_task = htmlspecialchars($_POST["num"]);
+		$user_id = $_SESSION['session_id'];
 		$mTask = M_Task::Instance();
 		$mTask->delete_task($user_id, $id_task);
 		header("Location:index.php?act=index");
@@ -134,14 +134,14 @@ class C_Task extends C_Base
     // Опеделить нужную функцию
     //
     public function action_delete_ready(){
-		$submit=$_POST['sub'];
-		if($submit=='READY ALL'){
+		$submit = $_POST['sub'];
+		if($submit == 'READY ALL'){
 			$this->action_ready_all();
-		} else if($submit=='REMOVE ALL'){
+		} else if($submit == 'REMOVE ALL'){
 			$this->action_delete_all();
-		} else if(($submit=='READY')||($submit=='NO READY')){
+		} else if(($submit == 'READY')||($submit=='NO READY')){
 			$this->action_ready();
-		} else if($submit=='DELETE'){
+		} else if($submit == 'DELETE'){
 			$this->action_delete();
 		} else{
 			echo "Произошла ошибка";

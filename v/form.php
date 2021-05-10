@@ -1,9 +1,9 @@
 <?php 
 	if(!empty($_GET['login'])){
-		echo"Здравствуйте новый пользователь ".$_GET['login'].", авторизуйтесь";
+		echo"<h2> Здравствуйте новый пользователь ".$_GET['login'].", авторизуйтесь </h2>";
 	} 
 ?>
-<div class="mregister">
+<div class="container mregister">
 	<div id="login">
 	<h1>Авторизация</h1>
 	<form action="index.php?act=login" id="registerform" method="post" name="registerform">
