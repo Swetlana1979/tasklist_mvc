@@ -21,29 +21,6 @@ class M_Task
 	}
 	
 	//
-	// Авторизация
-	// $login - имя пользователя
-	// $row - данные зарегистрированного пользователя
-	//
- 	public function login($login){
-		$sql="SELECT * FROM users WHERE login = ?";
-		$row=$this->msql->login($sql,$login);
-		return $row;
-	}
-	
-	//
-	// Авторизация
-	// $login - имя пользователя
-	// $password - пароль
-	// $created_at - время создания
-	// $row - данные зарегистрированного пользователя
-	//
-	public function register($login, $password,$created_at){
-		$sql="INSERT INTO users(login, password,created_at)VALUES(?,?,?)"; 
-		$row=$this->msql->register($sql,$login, $password,$created_at);
-		
-	}
-	//
 	// Приведение даты из БД к нужному формату
 	//
 	public function reverse_date($date){
