@@ -20,12 +20,8 @@ abstract class C_Base extends C_Controller
 		//include_once('C_Connect.php');
 		//header('Content-type: text/html; charset=utf-8');
 	}
-	public function connect(){
+	public function start(){
 		session_start();
-		define('DB_HOST', 'localhost');
-		define('DB_USER', 'root');
-		define('DB_PASS', '');
-		define('DB_NAME', 'tasklist');
 	}
 	//
 	// Генерация базового шаблонаы

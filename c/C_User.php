@@ -5,8 +5,7 @@
 
 class C_User extends C_Base{
 	
-	public $name;
-	public $user_id;
+	
 	//
 	// Конструктор.
 	//
@@ -37,8 +36,10 @@ class C_User extends C_Base{
 			if(!empty($row)){
 				$dblogin = $row[1];
 				$dbpassword = $row[2];
+				$hash = $row[4];
+				$hash = password_verify($password, $hash);
 				$user_id = $row[0];
-				if($login == $dblogin && $password == $dbpassword){
+				if($login == $dblogin && $dbpassword==true){
 					$_SESSION['session_login'] = $login;
 					$_SESSION['session_id'] = $user_id;
 					header("Location:index.php");
@@ -47,7 +48,8 @@ class C_User extends C_Base{
 				}				
 			} else {
 				$created_at = date("Y-m-d H:i:s");
-				$mUser->register($login, $password,$created_at);
+				$hash = password_hash($password, PASSWORD_BCRYPT);
+				$mUser->register($login, $password, $created_at, $hash);
 				header("Location:index.php?act=index&&login=$login&&password=$password");
 			} 
 		}

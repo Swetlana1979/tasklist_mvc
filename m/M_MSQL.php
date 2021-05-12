@@ -15,7 +15,7 @@ class M_MSQL
 	// Конструктор
 	//
 	private function __construct(){
-		
+		include('сonnect.php');
 	}
 	
 	//
@@ -50,10 +50,10 @@ class M_MSQL
 	//
 	// Регистрация пользователя
 	//
-	public function register($sql,$login, $password, $created_at){
+	public function register($sql,$login, $password, $created_at, $hash){
 		$con =  $this->con();
 		$stmt = mysqli_prepare($con, $sql); 
-		mysqli_stmt_bind_param($stmt, "sss", $login, $password, $created_at);
+		mysqli_stmt_bind_param($stmt, "ssss", $login, $password, $created_at, $hash);
 		mysqli_stmt_execute($stmt);
 		mysqli_stmt_close($stmt);
 	}

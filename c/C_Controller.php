@@ -10,7 +10,7 @@ abstract class C_Controller
 	protected abstract function before();
 	public function Request($action)
 	{
-		$this->connect();
+		$this->start();
 		$this->before();
 		$this->$action();
 		$this->render();

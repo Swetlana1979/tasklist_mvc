@@ -7,11 +7,10 @@ function my_autoloader($classname){
 	include_once($path);
 }
 spl_autoload_register('my_autoloader');
-//echo $_GET['c'];
+
 $action='action_';
 $action.=(isset($_GET['act']))?$_GET['act']:'index';
 $cName = isset($_GET['c'])?('C_'.$_GET['c']):('C_Task');
-//echo $cName;
 $controller = new $cName();
 $controller->Request($action);
 ?>
