@@ -15,6 +15,7 @@ class M_MSQL
 	// Конструктор
 	//
 	private function __construct(){
+		
 		include('сonnect.php');
 	}
 	
@@ -22,6 +23,7 @@ class M_MSQL
 	// Соединение с БД
 	//
 	public function con(){
+		
 		$con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 		if (!$con) {
 			printf("Невозможно подключиться к базе данных. Код ошибки: %s\n", mysqli_connect_error());
@@ -34,6 +36,7 @@ class M_MSQL
 	// Авторизация пользователя
 	//
 	public function login($sql,$login){
+		
 		$con = $this->con();
 		$stmt = mysqli_prepare($con,$sql); 
 		if(!$stmt){
@@ -51,6 +54,7 @@ class M_MSQL
 	// Регистрация пользователя
 	//
 	public function register($sql,$login, $password, $created_at, $hash){
+		
 		$con =  $this->con();
 		$stmt = mysqli_prepare($con, $sql); 
 		mysqli_stmt_bind_param($stmt, "ssss", $login, $password, $created_at, $hash);
@@ -76,7 +80,8 @@ class M_MSQL
 	//
 	// Добавление задачи
 	//
-	public function insert_task($sql, $user_id, $description, $created_at){			
+	public function insert_task($sql, $user_id, $description, $created_at){
+		
 		$con = $this->con();
 		$stmt = mysqli_prepare($con, $sql); 
         mysqli_stmt_bind_param($stmt, "iss", $user_id, $description, $created_at);
@@ -89,6 +94,7 @@ class M_MSQL
 	// Изменение строк
 	//	
 	public function ready_all($sql, $user_id){
+		
 		$con = $this->con();
 		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "i", $user_id);
@@ -100,6 +106,7 @@ class M_MSQL
 	// Удалить все задачи
 	//		
 	public function delete_all($sql,$user_id){
+		
 		$con = $this->con();
 		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "i", $user_id);
@@ -111,6 +118,7 @@ class M_MSQL
 	// Изменить статус задачи
 	//
 	public function ready_task($sql,$num,$id_task,$user_id){
+		
 		$con = $this->con();
 		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "iii", $num,$user_id, $id_task);
@@ -123,6 +131,7 @@ class M_MSQL
 	//
 	
 	public function delete_task($sql,$user_id, $id_task){
+		
 		$con = $this->con();
 		$stmt = mysqli_prepare($con,$sql);
 		mysqli_stmt_bind_param($stmt, "ii", $user_id, $id_task);

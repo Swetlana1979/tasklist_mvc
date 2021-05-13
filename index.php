@@ -12,5 +12,5 @@ $action='action_';
 $action.=(isset($_GET['act']))?$_GET['act']:'index';
 $cName = isset($_GET['c'])?('C_'.$_GET['c']):('C_Task');
 $controller = new $cName();
-$controller->Request($action);
+$controller->request($action);
 ?>

@@ -6,35 +6,25 @@ abstract class C_Controller
 {
 	// Генерация внешнего шаблона
 	protected abstract function render();
+	
 	// Функция отрабатывающая до основного метода
 	protected abstract function before();
-	public function Request($action)
-	{
+	
+	public function request($action){
+		if(!$action){
+			echo 'Данная страница не найдена';
+		}
 		$this->start();
 		$this->before();
 		$this->$action();
 		$this->render();
-		
 	}
-	//
-	// Запрос произведен методом GET?
-	//
-	protected function IsGet()
-	{
-		return $_SERVER['REQUEST_METHOD'] == 'GET';
-	}
-	//
-	// Запрос произведен методом POST?
-	//
-	protected function IsPost()
-	{
-		return $_SERVER['REQUEST_METHOD'] == 'POST';
-	}
+	
 	//
 	// Генерация HTML шаблона в строку.
 	//
-	protected function Template($fileName, $vars = array())
-	{
+	protected function template($fileName, $vars = array()){
+		
 		extract($vars);
 
 		// Генерация HTML в строку.
@@ -45,6 +35,6 @@ abstract class C_Controller
 	
 	// Если вызвали метод, которого нет - завершаем работу
 	public function __call($name, $params){
-        die('Не пишите фигню в url-адресе!!!');
+        die('Данная страница не найдена');
 	}
 }

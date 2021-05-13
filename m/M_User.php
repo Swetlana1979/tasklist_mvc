@@ -7,18 +7,20 @@ class M_User
 	//
 	// Получение единственного экземпляра (синглтон)
 	//
-	public static function Instance(){
+	public static function instance(){
 		if (self::$instance == null)
 			self::$instance = new M_User();
 		return self::$instance;
 	}
+	
 	//
 	// Конструктор
 	//
 	public function __construct()
 	{
-		$this->msql = M_MSQL::Instance();
+		$this->msql = M_MSQL::instance();
 	}
+	
 	public function login($login){
 		$sql="SELECT * FROM users WHERE login = ?";
 		$row=$this->msql->login($sql,$login);

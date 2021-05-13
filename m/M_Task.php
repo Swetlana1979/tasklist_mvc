@@ -8,15 +8,18 @@ class M_Task
 	// Получение единственного экземпляра (синглтон)
 	//
 	public static function Instance(){
-		if (self::$instance == null)
+		
+		if (self::$instance == null){
 			self::$instance = new M_Task();
+		}
 		return self::$instance;
 	}
+	
 	//
 	// Конструктор
 	//
-	public function __construct()
-	{
+	public function __construct() {
+		
 		$this->msql = M_MSQL::Instance();
 	}
 	
@@ -24,16 +27,19 @@ class M_Task
 	// Приведение даты из БД к нужному формату
 	//
 	public function reverse_date($date){
+		
 		$mass=explode('-',$date);
 		$mass=array_reverse($mass);
 		$date=implode('.',$mass);
 		return $date;
 	}
+	
 	// 
 	// Вывод задач пользователя
 	// $arr - массив задач
 	//
 	public function output($arr){
+		
 		$array=array();
 		for($i=0; $i<count($arr); $i++){
 			$status=$arr[$i]['3'];
@@ -88,6 +94,7 @@ class M_Task
    // $description - описание задачи
    //
     public function add_desc($user_id,$description){
+		
 	    $created_at = date("Y-m-d H:i:s");
 		$sql = "INSERT INTO tasks(user_id, description, created_at, status)VALUES(?,?,?, 0)"; 
 		$this->msql->insert_task($sql, $user_id,$description, $created_at);	
@@ -98,6 +105,7 @@ class M_Task
 	 // $user_id -id пользователя
 	 //
 	 public function ready_all($user_id){
+		 
 	    $sql = "UPDATE tasks SET status = 1 WHERE user_id=?";
 		$this->msql->ready_all($sql, $user_id);
 		return true;
@@ -108,6 +116,7 @@ class M_Task
 	// $user_id -id пользователя
 	//
 	public function delete_all($user_id){
+		
 	    $sql = "DELETE FROM tasks WHERE user_id=?";
 		$this->msql->delete_all($sql, $user_id);
 		return true;
@@ -119,6 +128,7 @@ class M_Task
 	// $user_id - номер пользователя
 	//
 	public function ready_task($num,$id_task,$user_id){
+		
 	   $sql = "UPDATE tasks SET status = ? WHERE user_id=? AND id=?";
 	   $this->msql->ready_task($sql,$num,$id_task,$user_id);
 	   return true;
@@ -128,6 +138,7 @@ class M_Task
    // Удалить задачу
    //
    public function delete_task($user_id, $id_task){
+	   
 		$sql = "DELETE FROM tasks WHERE user_id=? AND id=?";
 		$this->msql->delete_task($sql, $user_id, $id_task);
 		return true;

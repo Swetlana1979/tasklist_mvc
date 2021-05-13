@@ -9,13 +9,17 @@ class C_User extends C_Base{
 	//
 	// Конструктор.
 	//
-	function __construct()
-	{		
+	function __construct()	{		
+		
 		parent::__construct();
 		$this->mUser = M_User::Instance();
 	}
 	
+	//
+	// Разлогинивание
+	//
 	public function action_logout() {
+		
 		unset($_SESSION['session_login']);
 		unset($_SESSION['session_id']);
 		session_destroy();
