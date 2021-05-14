@@ -1,4 +1,5 @@
 <?php
+include_once('m/сonnect.php');
 
 function my_autoloader($classname){
 	$s = substr($classname,0,1);

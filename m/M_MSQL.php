@@ -16,7 +16,7 @@ class M_MSQL
 	//
 	private function __construct(){
 		
-		include('сonnect.php');
+		
 	}
 	
 	//
