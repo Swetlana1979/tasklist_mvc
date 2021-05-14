@@ -12,9 +12,16 @@ class C_User extends C_Base{
 	function __construct()	{		
 		
 		parent::__construct();
-		$this->mUser = M_User::Instance();
+		
 	}
 	
+	//
+	// Наследование
+	//
+	public function mUser() {
+		
+		return $this->mUser = M_User::Instance();
+    }
 	//
 	// Разлогинивание
 	//
@@ -35,15 +42,15 @@ class C_User extends C_Base{
 		if((!empty($_POST['login'])&&(!empty($_POST['password'])))){
 			$login = htmlspecialchars($_POST['login']);
 			$password = htmlspecialchars($_POST['password']);
-			$mUser = M_User::Instance();
+			$mUser = $this->mUser();
 			$row=$mUser->login($login);
 			if(!empty($row)){
 				$dblogin = $row[1];
 				$dbpassword = $row[2];
 				$hash = $row[4];
-				$hash = password_verify($password, $hash);
+				$dbpass = password_verify($dbpassword, $hash);
 				$user_id = $row[0];
-				if($login == $dblogin && $dbpassword==true){
+				if($login == $dblogin && $dbpass){
 					$_SESSION['session_login'] = $login;
 					$_SESSION['session_id'] = $user_id;
 					header("Location:index.php");
@@ -60,4 +67,5 @@ class C_User extends C_Base{
 		
 	}
 }
+
 ?>

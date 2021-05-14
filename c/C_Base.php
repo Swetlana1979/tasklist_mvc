@@ -48,13 +48,5 @@ abstract class C_Base extends C_Controller{
 		}		
 	}
 	
-	//
-	// Наследование
-	//
-	public function mTask() {
-		
-		return $this->mTask = M_Task::Instance();
-   }
-   
 	
 }

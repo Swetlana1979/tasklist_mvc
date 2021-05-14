@@ -16,6 +16,13 @@ class C_Task extends C_Base
 	}
 	
 	//
+	// Наследование
+	//
+	public function mTask() {
+		
+		return $this->mTask = M_Task::Instance();
+   }
+	//
 	//Вывод список задач пользователя
 	//
 	public function action_index() {
